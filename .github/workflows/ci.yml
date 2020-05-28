@@ -19,12 +19,15 @@ jobs:
     #- run: npm run test:integration
       
     - run: npm run test:integration
+
     - uses: actions/upload-artifact@v2
+      if: always()
       with:
         path: src
 
     - run: echo "Hello World" > file.txt
     - uses: actions/upload-artifact@v1
+      if: always()
       with:
         name: file
         path: file.txt
