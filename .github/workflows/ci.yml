@@ -18,10 +18,10 @@ jobs:
     #- run: npm run test
     #- run: npm run test:integration
       
-    - run: echo hi > world.txt
+    - run: npm run test:integration
     - uses: actions/upload-artifact@v2
       with:
-        path: world.txt
+        path: src
 
     - run: echo "Hello World" > file.txt
     - uses: actions/upload-artifact@v1
