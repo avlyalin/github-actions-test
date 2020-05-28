@@ -1,5 +1,6 @@
 module.exports = {
     launch: {
-        args: ['--force-color-profile=srgb']
+        headless: false,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
     }
 }
