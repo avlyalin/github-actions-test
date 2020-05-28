@@ -11,7 +11,7 @@ const Select = React.forwardRef(function Select(props, ref) {
     <div
       data-testid={'select-component'}
       ref={ref}
-      className={classnames('relative text-gray-300 hover:text-gray-400')}
+      className={classnames('relative text-gray-300 hover:text-gray-400 bg-white')}
       onClick={handleClick}
       onBlur={handleBlur}
     >

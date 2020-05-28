@@ -15,22 +15,11 @@ jobs:
         node-version: '12.x'
     - run: npm ci
     - run: npm run build --if-present
-    #- run: npm run test
-    #- run: npm run test:integration
-      
     - run: npm run test:integration
-
     - uses: actions/upload-artifact@v2
       if: always()
       with:
-        path: src
-
-    - run: echo "Hello World" > file.txt
-    - uses: actions/upload-artifact@v1
-      if: always()
-      with:
-        name: file
-        path: file.txt
+        path: src/**/__diff_output__
 
       #uses: actions/upload-artifact@v2
       #with:
@@ -44,15 +33,15 @@ jobs:
       #uses: ianwalter/puppeteer@12728ddef82390d1ecd4732fb543f62177392fbb
         #with:
         #  args: yarn
-    
+
     #- name: Test
     #  uses: ianwalter/puppeteer@12728ddef82390d1ecd4732fb543f62177392fbb
     #  with:
     #      args: npm run test:integration
-    
+
     #- name: Upload a Build Artifact
 
-  
-    - name: Download a Build Artifact
-      uses: actions/download-artifact@v2
+
+#    - name: Download a Build Artifact
+#      uses: actions/download-artifact@v2
 
