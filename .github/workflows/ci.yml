@@ -24,10 +24,18 @@ jobs:
       uses: ianwalter/puppeteer@12728ddef82390d1ecd4732fb543f62177392fbb
         #with:
         #  args: yarn
+    
     - name: Test
       uses: ianwalter/puppeteer@12728ddef82390d1ecd4732fb543f62177392fbb
       with:
           args: npm run test:integration
+    
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: screenshots diffs
+        path: src/**/__diff_output__/*
+  
     - name: Download a Build Artifact
       uses: actions/download-artifact@v2
 
