@@ -15,8 +15,11 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Test secrets
-        run: node test_api_key.js
+      - name: Install
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
         env:
           FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
@@ -25,9 +28,6 @@ jobs:
           FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
           FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
           FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
-      - uses: actions/upload-artifact@v2
-        with:
-         path: test_api_key.txt
 
 #      - run: npm ci
 #      - run: npm run build
@@ -43,15 +43,9 @@ jobs:
       #    - run: npm run test
       #    - run: npm run test:integration
 
-#       - name: Install SSH Client 🔑
-#         uses: webfactory/ssh-agent@v0.2.0 # This step installs the ssh client into the workflow run. There's many options available for this on the action marketplace.
-#         with:
-#           ssh-private-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
-#           SSH: true,
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: public # The folder the action should deploy.
