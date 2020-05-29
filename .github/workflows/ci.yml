@@ -29,11 +29,11 @@ jobs:
           FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
           FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
 
-      - name: Upload build
+      - name: Upload with build
         uses: actions/upload-artifact@v2
         with:
           name: build
-          path: public
+          path: .
 
   test:
     needs: [build]
