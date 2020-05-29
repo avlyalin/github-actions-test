@@ -36,6 +36,7 @@ jobs:
           path: public
 
   test:
+    needs: [build]
     runs-on: windows-latest
     steps:
       - name: Download Artifacts 🔺 # The project is then uploaded as an artifact named 'site'.
