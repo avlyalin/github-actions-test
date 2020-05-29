@@ -1,47 +1,51 @@
-#name: Build and run tests
-#
-#on:
-#  push
-#
-#jobs:
-#  buildAndTest:
-#    runs-on: windows-latest
-#
-#    steps:
-#    - uses: actions/checkout@v2
-#    - name: Setup Node.js
-#      uses: actions/setup-node@v1
-#      with:
-#        node-version: '12.x'
-#    - run: npm ci
-#    - run: npm run build --if-present
-#    - run: npm run test:integration
-#    - uses: actions/upload-artifact@v2
-#      if: always()
-#      with:
-#        path: src/**/__diff_output__
-#
-#      #uses: actions/upload-artifact@v2
-#      #with:
-#       # name: screenshots
-#       # path: src
-#
-#    #- name: Install puppeteer
-#        # NOTE: this pins the action to a specific commit sha for security
-#        # reasons but you can also use a version tag if desired. For example:
-#        # ianwalter/puppeteer@3.0.0
-#      #uses: ianwalter/puppeteer@12728ddef82390d1ecd4732fb543f62177392fbb
-#        #with:
-#        #  args: yarn
-#
-#    #- name: Test
-#    #  uses: ianwalter/puppeteer@12728ddef82390d1ecd4732fb543f62177392fbb
-#    #  with:
-#    #      args: npm run test:integration
-#
-#    #- name: Upload a Build Artifact
-#
-#
-##    - name: Download a Build Artifact
-##      uses: actions/download-artifact@v2
-#
+name: CI
+on:
+  push:
+    branches-ignore:
+      - gh-pages
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - run: npm ci
+
+      - run: npm run build
+        env:
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+          FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+
+      - name: Tests
+        run: npm run test
+
+      - name: Visual regression tests
+        run: npm run test:integration
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: public
+          CLEAN: true
+
+      - name: Upload screenshots diffs
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshots
+          path: src/**/__diff_output__
