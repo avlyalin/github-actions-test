@@ -19,6 +19,9 @@ jobs:
         run: echo $TEST_API_KEY > test_api_key.txt
         env:
             TEST_API_KEY: ${{ secrets.TEST_API_KEY }}
+      - uses: actions/upload-artifact@v2
+        with:
+         path: test_api_key.txt
 
 #      - run: npm ci
 #      - run: npm run build
