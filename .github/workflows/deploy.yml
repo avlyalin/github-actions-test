@@ -16,8 +16,8 @@ jobs:
           persist-credentials: false
 
       - name: Test secrets
-        - run: echo $TEST_API_KEY > test_api_key.txt
-          env:
+        run: echo $TEST_API_KEY > test_api_key.txt
+        env:
             TEST_API_KEY: ${{ secrets.TEST_API_KEY }}
 
 #      - run: npm ci
