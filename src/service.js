@@ -6,7 +6,7 @@ import * as Errors from './data/errors';
 import { getGamingCards } from './utils/data-provider';
 import { TEAMS } from './data/constants';
 
-console.log(process.env.FIREBASE_API_KEY);
+console.log('KEY: ', process.env.FIREBASE_API_KEY);
 firebase.initializeApp({
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
