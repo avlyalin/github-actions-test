@@ -2,7 +2,7 @@ name: Deploy
 on: [release]
 jobs:
   build-and-test:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -17,8 +17,8 @@ jobs:
 
     - run: npm ci
     - run: npm run build
-    - run: npm run test
-    - run: npm run test:integration
+#    - run: npm run test
+#    - run: npm run test:integration
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
@@ -26,4 +26,4 @@ jobs:
         ACCESS_TOKEN: ${{ secrets.ACTIONS_DEPLOY_KEY }}
         BRANCH: gh-pages # The branch the action should deploy to.
         FOLDER: public # The folder the action should deploy.
-  
+
