@@ -37,6 +37,7 @@ jobs:
 
       - name: Upload screenshots diffs
         uses: actions/upload-artifact@v2
+        if: always()
         with:
           name: screenshots
           path: src/**/__diff_output__
