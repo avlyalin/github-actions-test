@@ -6,7 +6,6 @@ on:
 jobs:
   build-and-test:
     runs-on: windows-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: Setup Node.js
@@ -30,11 +29,38 @@ jobs:
           FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
           FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
 
+      - name: Run tests
+        run: npm run test
+
+      - name: Run visual regression tests
+        run: npm run test:integration
+
+      - name: Upload screenshots diffs
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: screenshots
+          path: src/**/__diff_output__
+
+      - name: Upload build
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: public
+
+  deploy:
+    needs: [build-and-test]
+    runs-on: windows-latest
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: public
+          FOLDER: build
           CLEAN: true
-
