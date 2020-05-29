@@ -20,16 +20,16 @@ jobs:
       #    - run: npm run test
       #    - run: npm run test:integration
 
-      - name: Install SSH Client 🔑
-        uses: webfactory/ssh-agent@v0.2.0 # This step installs the ssh client into the workflow run. There's many options available for this on the action marketplace.
-        with:
-          ssh-private-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+#       - name: Install SSH Client 🔑
+#         uses: webfactory/ssh-agent@v0.2.0 # This step installs the ssh client into the workflow run. There's many options available for this on the action marketplace.
+#         with:
+#           ssh-private-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
-          SSH: true,
-          #        ACCESS_TOKEN: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+#           SSH: true,
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages-2 # The branch the action should deploy to.
           FOLDER: public # The folder the action should deploy.
 
