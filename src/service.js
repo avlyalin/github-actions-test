@@ -18,9 +18,9 @@ firebase.initializeApp({
 });
 const database = firebase.database();
 
-const DB_SESSIONS_REF = sessions;
-const DB_USERS_REF = sessions_users;
-const DB_CARDS_REF = sessions_cards;
+const DB_SESSIONS_REF = 'sessions';
+const DB_USERS_REF = 'sessions_users';
+const DB_CARDS_REF = 'sessions_cards';
 
 /**
  * Инициализация игровой сессии
